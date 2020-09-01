@@ -1,7 +1,8 @@
 const express = require('express');
 const validate = require('../../middlewares/validate');
 const authValidation = require('../../validations/auth.validation');
-const authController = require('../../controllers/auth.controller');
+const authController = require('../../controllers/auth/auth.controller');
+const passport = require('passport');
 
 const router = express.Router();
 
@@ -10,6 +11,97 @@ router.post('/login', validate(authValidation.login), authController.login);
 router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
 router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
 router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
+router.post('/sendemail-verification', validate(authValidation.mailVerification), authController.emailVerification);
+// router.post('/confirmemail-verification', validate(authValidation.resendmailVerification), authController.confirmemailVerification);
+
+
+// Setting the google oauth routes
+router.get('/google', passport.authenticate('google', {
+        scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'
+        ]
+    })
+)
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' } ), (req, res) => {return res.status(200) })
+
+// Setting the facebook oauth routes
+router.get('/facebook', passport.authenticate('facebook'));
+router.get('/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }) );
+
+
+// // Setting up the authController authentication api
+// router.post('/api/auth/signin', authController.signin);
+// router.get('/api/auth/signout', authController.signout);
+
+// //setting ldap AD auth routes
+// router.post('/api/auth/ldap', authController.ldap_signin);
+
+// // Setting the facebook oauth routes
+// router.get('/api/auth/facebook', authController.oauthCall('facebook', {
+//   scope: ['email']
+// }));
+// router.get('/api/auth/facebook/callback', authController.oauthCallback('facebook'));
+
+// // Setting the twitter oauth routes
+// router.get('/api/auth/twitter').get(authController.oauthCall('twitter'));
+// router.get('/api/auth/twitter/callback', authController.oauthCallback('twitter'));
+
+// // Setting the google oauth routes
+// router.get('/api/auth/google', authController.oauthCall('google', {
+//   scope: [
+//     'https://www.googleapis.com/auth/userinfo.profile',
+//     'https://www.googleapis.com/auth/userinfo.email'
+//   ]
+// }));
+// router.get('/api/auth/google/callback', authController.oauthCallback('google'));
+
+// // Setting the linkedin oauth routes
+// router.get('/api/auth/linkedin', authController.oauthCall('linkedin', {
+//   scope: [
+//     'r_basicprofile',
+//     'r_emailaddress'
+//   ]
+// }));
+// router.get('/api/auth/linkedin/callback', authController.oauthCallback('linkedin'));
+
+// // Setting the github oauth routes
+// router.get('/api/auth/github', authController.oauthCall('github'));
+// router.get('/api/auth/github/callback', authController.oauthCallback('github'));
+
+// // Setting the paypal oauth routes
+// router.get('/api/auth/paypal', authController.oauthCall('paypal'));
+// router.get('/api/auth/paypal/callback', authController.oauthCallback('paypal'));
+
+// // Setting the saml2 routes
+// router.get('/login',
+//   passport.authenticate('saml',
+//     {
+//       successRedirect: '/dashboards',
+//       failureRedirect: '/login'
+//     })
+// );
+// router.post('/login/callback',
+//   passport.authenticate('saml',
+//     {
+//       failureRedirect: '/unknown-user',
+//       failureFlash: true
+//     }),
+//   function (req, res) {
+//     if(req.user.roles.indexOf('root') > -1 || req.user.roles.indexOf('partner') > -1) {
+//       res.redirect('/');
+//     } else {
+//       res.redirect('/dashboards');
+//     }
+//   }
+// );
+
+// router.get('/logout/callback', function(req, res){
+//   console.log("logout called");
+//   req.logout(); 
+//   res.redirect('/login'); 
+// });
+
 
 module.exports = router;
 

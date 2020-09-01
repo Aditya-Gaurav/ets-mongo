@@ -98,10 +98,24 @@ const generateResetPasswordToken = async (email) => {
   return resetPasswordToken;
 };
 
+const generatEmailVerificationToken = async (email) => {
+  const user = await userService.getUserByEmail(email);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'No users found with this email');
+  }
+
+  const expires = moment().add(config.jwt.emailVerficationExpirationMinutes, 'minutes');
+  const emailVerficationToken = genrateToken(user.id, expires)
+  await saveToken(emailVerficationToken, user.id, expires, 'emailVerification')
+  return emailVerficationToken;
+
+}
+
 module.exports = {
   generateToken,
   saveToken,
   verifyToken,
   generateAuthTokens,
   generateResetPasswordToken,
+  generatEmailVerificationToken
 };

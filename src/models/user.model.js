@@ -4,12 +4,42 @@ const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
 const { roles } = require('../config/roles');
 
+
+const userShippingAddressSchema = mongoose.Schema(
+  { 
+    fullName: String,
+    address : String,
+    addressLine1: String,
+    addressLine2: String,
+    landmark: String,
+    city : String,
+    state :  String,
+    zip :  String,
+    phone :  String,
+    isPrimary: {
+      type: Boolean,
+      default: false
+    }
+  },
+  {
+    timestamps: true,
+  }
+
+);
+
 const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
       trim: true,
+    },
+    username: {
+      type: String,
+      unique: 'Username already exists',
+      lowercase: true,
+      trim: true,
+      match: [ /^[a-z0-9\-]{3,32}$/ , 'Username can only include alphanumeric(lowercase) including - & must be 3-32 characters']
     },
     email: {
       type: String,
@@ -25,9 +55,8 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
       trim: true,
-      minlength: 8,
+      minlength: 4,
       validate(value) {
         if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
           throw new Error('Password must contain at least one letter and one number');
@@ -35,15 +64,29 @@ const userSchema = mongoose.Schema(
       },
       private: true, // used by the toJSON plugin
     },
-    role: {
-      type: String,
-      enum: roles,
-      default: 'user',
+    roles: {
+      type: [{
+        type: String,
+        enum: roles
+      }],
+      default: ['user'],
+      required: 'Please provide at least one role'
     },
+    profileImageURL: {
+      type: String,
+      default: 'modules/users/client/img/profile/default.png'
+    },
+    providerData: {},
+    additionalProvidersData: {},
+    mobileNumber: String,
+    providerId: String,
+    provider: String,
+    shippingAddress: [userShippingAddressSchema]
   },
   {
     timestamps: true,
-  }
+  },
+
 );
 
 // add plugin that converts mongoose to json
@@ -60,6 +103,17 @@ userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
   return !!user;
 };
+
+/**
+ * Check if providerId exists
+ * @param {string} providerId - The user's oauth id
+ * @param {ObjectId} [excludeUserId] - The id of the user to be excluded
+ * @returns {Promise<boolean>} 
+*/
+userSchema.statics.isProviderIdExists = async function(providerId, excludeUserId) {
+   const user = await this.findOne({ providerId, _id: {$ne: excludeUserId} })
+   return !!user;
+}
 
 /**
  * Check if password matches the user's password

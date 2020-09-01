@@ -39,8 +39,27 @@ const sendResetPasswordEmail = async (to, token) => {
   await sendEmail(to, subject, text);
 };
 
+const sendEmailVerification = async(to, token) => {
+  const subject = 'Email Verification';
+  const emailVerificationUrl = `htttp://localhost:3001/email-verification?token=${token}`;
+  const text = `Dear User,
+      ${emailVerificationUrl}
+
+      If you do not click on the verification link before it expires, you will need to restart your registration for the NetApp Support Site.
+
+      Please contact us with any concerns you may have.
+
+      Thank You,
+
+      Etshisrt Store`;
+
+      await sendEmail(to, subject, text)
+
+}
+
 module.exports = {
   transport,
   sendEmail,
   sendResetPasswordEmail,
+  sendEmailVerification
 };
