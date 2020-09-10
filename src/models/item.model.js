@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
+const { roles } = require('../config/roles');
 
 const ProductMediaSchema = mongoose.Schema(
 	{
@@ -18,7 +20,7 @@ const ProductMediaSchema = mongoose.Schema(
 	}
 )
 
-const ProductModelSchema = mongoose.Schema({
+const ItemSchema = mongoose.Schema({
 	desc: [{
 		lang: String,
 		val: String
@@ -32,12 +34,10 @@ const ProductModelSchema = mongoose.Schema({
 			type: String
 	},
 	brand: {
-		type: mongoose.Types.ObjectId,
-		ref: 'brand'
 	},
 	assets: {
 		imgs: {
-			type: Array,
+			type: Array
 		}
 	},
 	shipping: {
@@ -100,7 +100,20 @@ const ProductModelSchema = mongoose.Schema({
 	}
 );
 
-const Item  =  mongoose.model('Item', ProductModelSchema)
+ItemSchema.plugin(toJSON);
+ItemSchema.plugin(paginate);
+
+/**
+ * Check if item exists
+ * @param {ObjectId} itemId - The item's id
+ * @returns {Promise<boolean>}
+ */
+ItemSchema.statics.isItemAvailable = async function (itemId) {
+	const item = await this.findOne({ _id: itemId});
+	return !!item;
+};
+
+const Item  =  mongoose.model('Item', ItemSchema)
 
 module.exports = Item;
 

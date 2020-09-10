@@ -1,17 +1,22 @@
 const mongoose = require('mongoose');
 const HierarchyModel = mongoose.Schema({
   	name: {
-        type: String
+      type: String
     },
     count: {
-        type: Number
+      type: Number
     },
     parents: {
-        type: []
-
+			type: [{
+				type: mongoose.SchemaTypes.ObjectId,
+				ref: 'Hierarchy'
+			}],
+    },
+    category: {
+      type: String
     },
     facets: {
-        type: []
+      type: []
     }
 	},
 	{

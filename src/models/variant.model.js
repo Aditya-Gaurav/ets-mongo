@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
+
 const VariantModel = mongoose.Schema(
   {
 		name: String,
@@ -8,14 +10,14 @@ const VariantModel = mongoose.Schema(
 		},
 		itemId: {
 		  type: mongoose.Schema.ObjectId,
-			ref: 'Product'
+			ref: 'Item'
 		},
 		altIds: {
-			type: String
+			type: Object
 		},
 		assets:{
 			imgs: {
-				type: [],
+				type: {},
 				default: undefined
 			}
 		},
@@ -25,6 +27,9 @@ const VariantModel = mongoose.Schema(
 		}
 
 	});
+	
+
+VariantModel.plugin(toJSON);
 
 const Variant = mongoose.model('Variant', VariantModel);
 

@@ -3,3 +3,9 @@ module.exports.emailService = require('./email.service');
 module.exports.tokenService = require('./token.service');
 module.exports.userService = require('./user.service');
 module.exports.itemService = require('./item.service');
+module.exports.variantService = require('./variant.service');
+module.exports.hierarchyService = require('./hierarchy.service');
+module.exports.brandService = require('./brand.service');
+module.exports.facetService = require('./facet.service');
+
+

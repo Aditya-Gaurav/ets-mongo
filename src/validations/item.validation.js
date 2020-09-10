@@ -8,19 +8,20 @@ const createItem = {
     desc: Joi.array().items(
        Joi.object().keys({
         lang: Joi.string(),
-        en: Joi.string()
+        val: Joi.string()
        })
     ),
      name: Joi.string(),
      lname: Joi.string(),
      category: Joi.string(),
-     brand: Joi.string(),
+     brand: Joi.object(),
      assets: Joi.object().keys({ 
       imgs: Joi.array().items(
         Joi.object().keys({
         img: Joi.object().keys({ 
-          lang: Joi.string(),
-          en: Joi.string()
+          height: Joi.string(),
+          width: Joi.string(),
+          src: Joi.string()
         })
       })
      ),
@@ -42,15 +43,15 @@ const createItem = {
      attrs: Joi.array().items(
       Joi.object().keys({
         name: Joi.string(),
-        val: Joi.string()
+        value: Joi.string()
       })
      ),
      variants:  Joi.object().keys({
       cnt: Joi.number(),
       attrs: Joi.array().items(
         Joi.object().keys({
-          name: Joi.string(),
-          val: Joi.string()
+          dispType: Joi.string(),
+          name: Joi.string()
         })
       ) 
     })
@@ -59,13 +60,34 @@ const createItem = {
 };
 
 const getItems = {
-     
+  query: Joi.object().keys({
+    // name: Joi.string(),
+    // role: Joi.string(),
+    sortBy: Joi.string(),
+    limit: Joi.number().integer(),
+    page: Joi.number().integer(),
+  }),
+};
+
+const getItem = {
+  params: Joi.object().keys({
+    itemId: Joi.string().custom(objectId),
+  }),
 };
 
 const updateItem = {
 
 };
-const deleteItem = {
 
+
+const deleteItem = {
+  params: Joi.object().keys({
+    itemId: Joi.string().custom(objectId),
+  }),
 };
-module.exports = {createItem, getItems, updateItem, deleteItem}
+
+
+
+
+
+module.exports = {createItem, getItems, getItem, updateItem, deleteItem}

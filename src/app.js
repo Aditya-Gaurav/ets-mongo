@@ -14,10 +14,9 @@ const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 const { initialiseAuthentication } = require('../src/controllers/auth')
-
-
 const app = express();
 console.log(config);
+
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
@@ -47,7 +46,6 @@ app.options('*', cors());
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
 
-
 //added by me 
 initialiseAuthentication(app);
 
@@ -57,7 +55,7 @@ if (config.env === 'production') {
 }
 
 // v1 api routes
-app.use(routes);
+app.use('/api/v1', routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {

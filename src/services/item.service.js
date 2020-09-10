@@ -8,11 +8,50 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Item>}
 */
 const createItem = async (itemBody) => {
-//   if (await User.isEmailTaken(userBody.email)) {
-//     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-//   }
-  const item = await User.create(itemBody);
+      console.log("itemBody", itemBody)
+  const item = await Item.create(itemBody);
   return item;
 };
 
-module.exports = {createItem}
+/**
+ * Query for users
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @returns {Promise<QueryResult>}
+ */
+const queryItems = async (filter, options) => {
+  const items = await Item.paginate(filter, options);
+  return items;
+};
+
+
+
+/**
+ * Get item by id
+ * @param {ObjectId} id
+ * @returns {Promise<Item>}
+ */
+const getItemById = async (id) => {
+  return Item.findById(id);
+};
+
+
+/**
+ * Delete item by id
+ * @param {ObjectId} itemId
+ * @returns {Promise<Item>}
+ */
+const deleteItemById = async (itemId) => {
+  const item = await getItemById(itemId);
+  if (!item) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Item not found');
+  }
+  await item.remove();
+  return item;
+};
+
+
+module.exports = {createItem, queryItems, getItemById, deleteItemById}

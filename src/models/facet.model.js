@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
 
-const FacetModel = mongoose.Schema({
+
+const FacetSchema = mongoose.Schema({
+    _id: String,
     name: {
         type: String
     },
@@ -16,7 +19,10 @@ const FacetModel = mongoose.Schema({
 	}
 )
 
-const Facet = mongoose.model('Facet', FacetModel);
+FacetSchema.plugin(toJSON);
+FacetSchema.plugin(paginate);
+
+const Facet = mongoose.model('Facet', FacetSchema);
 
 module.exports = Facet;
 
