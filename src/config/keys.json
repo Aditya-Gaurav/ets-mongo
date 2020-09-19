@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "etshirt",
+  "private_key_id": "89487881cbdb3913ae6bfd8e4b06c9689944e1ed",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDeobUdbcIklw2b\nN5fa642YXhFZti5WYuADN7SHs4++xjTtgd1aCi0LSAQBXpj5RgDdZUqC9WSGzDFh\nwercOkzOIKjAFL4+DqA7Fqbhp3exE/H8M3gOCkbOznUBh6R7znAE2MkNamsfej4F\n8pR/lv4UDNO45VcL0ofRP1vTGbvbJyX0xm/IxCPBtt15rgQtxiMLeS4sD0FfcNjU\n8Zf4QYk4hZxmRjcg/VT/9JWjBQTB0lJA8kQCkeVJCwxPd7zQGcpLdAebS8Y9ed1p\nNWXT+VKRLUMnh3ndeQpb+L+JHYlcNWv1UU6E0KBh/GLjfoQD9ubi89vG/O4jmVCe\nBwVTm5L3AgMBAAECggEAK+6kI1kH4RmPvUv0ouYtrF4PtXDOZwye4POqo8aqvH43\nbpDcYcq1Rc8hvzVwIWyPeiDlWb9b5X/A1OYj1u6IPnrSYgkV24AeXVqkds4Jv/9M\nFrT/YWHkxCWYkEM4kZfUohg3YHbaCb2hJKJQbHcaz1ESrJ9RFIuocoG6uIcQ+3c5\nWwS0fnbsQZLVfThxqui9CeA8sheeZRBdnbL91gSO0Jz7pTAicvnjP13aK4AZT+fy\nF1Z4tJeurqKblZV94RJEi0yJomf0iCCHROg5lP4FTNH8AA8h1yKqi+T7d/y1A6XV\nFMD/+U9qKygJInSFZK7W/YLq2Wag8ucIIZUqrL2S6QKBgQD7y5X8wCis4O7ehxhE\n+MAuv8QxGwjjYo0gaxKntAKWb6GWqVcvGX7azJt7t/4Fs/ZbyLo/dGIVNrdQ+sCi\no130YaQE6cvC7YyzuSi7hRhK5SADsy9kHIllsUbTALUMgDqnW3Ketv4PxJ/HWZCt\nQM+/sTelWvsA1Gx25M0HEy4+jwKBgQDiWXLP6KjfBSSdqd53ZLis326qQdLNGp3Z\nm8/N85zZhda+o/yCVL9kExSAKaJFz8ROxReA5aJArfhacKeNzndzgC8vxx1Q25v5\nr5WboDH56GGtb2SHNryO80r+AKt0Wavo4j02s45/+btDDg7mU73W/M4SDVFyZBvg\nIofP/gyZGQKBgAtz/jWJ9A+xB4x9rp/shKlbtavaI/Rb1jmERUv1hyyalUoKF9of\nmcKQDf55pwdRYUJZhgc+3vtCCuKXFU4QikSEcHZ8v/T04zKFmJG3AxzdATDJ5Lz0\nA1fp0WPlo1aXOpPEOBl6D2JeOjpSG5+V1B1PDU3rLoGiJ/DchWrt92uHAoGATsNb\nfVdzc++hNy/GFvu4e4dgReSTywVJClD6targ2JyHBl2f32ZIFzXAe3yBWBOdNt/E\ndvjxRdqDwkzTMTg4PrvLL6/01o8krnTX9Yh/+3tOigBqFdcJNCEa5lorT1hoxqf7\nLw66NnQbIpFAxAs90xKzTnrN7aVCQfMiGVFI5vkCgYAZNvLxbACdyCcGYwNxhuy1\nfl6uKy9Tl80Q4b6PZM5UCILFUSkcAXkrvZhxV6e3lAWfuTrJzY1WFYXhdCIxrqiY\nMD+vjM8QkepgE+mBMbL5+k1D89QZeqcvrD/FelvbdI/gResusijpemUePCWJbH9V\nCXNGruTwwpMWBm98FDpUYQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "etshirt@etshirt.iam.gserviceaccount.com",
+  "client_id": "112205596694843780976",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/etshirt%40etshirt.iam.gserviceaccount.com"
+}

@@ -5,7 +5,28 @@ const register = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
-    name: Joi.string().required(),
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    name: Joi.string(),
+    username: Joi.string(),
+    profileImage: Joi.string(),
+    roles: Joi.array(),
+    mobileNumber: Joi.string(),
+    shippingAddress: Joi.array().items(
+      Joi.object().keys({
+        fullName: Joi.string(),
+        address : Joi.string(),
+        addressLine1: Joi.string(),
+        addressLine2: Joi.string(),
+        landmark: Joi.string(),
+        city : Joi.string(),
+        state :  Joi.string(),
+        zip :  Joi.string(),
+        phone :  Joi.string(),
+        isPrimary: Joi.boolean()
+      })
+   ),
+
   }),
 };
 
