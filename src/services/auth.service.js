@@ -19,6 +19,19 @@ const loginUserWithEmailAndPassword = async (email, password) => {
 };
 
 /**
+ * Logout
+ * @param {string} refreshToken
+ * @returns {Promise}
+ */
+const logout = async (refreshToken) => {
+  const refreshTokenDoc = await Token.findOne({ token: refreshToken, type: tokenTypes.REFRESH, blacklisted: false });
+  if (!refreshTokenDoc) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Not found');
+  }
+  await refreshTokenDoc.remove();
+};
+
+/**
  * Refresh auth tokens
  * @param {string} refreshToken
  * @returns {Promise<Object>}
@@ -73,6 +86,7 @@ const confirmEmailVerfication = async(emailVerificationToken) => {
 
 module.exports = {
   loginUserWithEmailAndPassword,
+  logout,
   refreshAuth,
   resetPassword,
   confirmEmailVerfication

@@ -12,6 +12,8 @@ router.post('/refresh-tokens', validate(authValidation.refreshTokens), authContr
 router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
 router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
 router.post('/sendemail-verification', validate(authValidation.mailVerification), authController.emailVerification);
+router.post('/logout', validate(authValidation.logout), authController.logout);
+
 // router.post('/confirmemail-verification', validate(authValidation.resendmailVerification), authController.confirmemailVerification);
 
 
