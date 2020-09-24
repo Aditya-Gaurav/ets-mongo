@@ -5,6 +5,8 @@ module.exports.Variant = require('./variant.model');
 module.exports.Hierarchy = require('./hierarchy.model');
 module.exports.Brand = require('./brand.model');
 module.exports.Facet = require('./facet.model');
+module.exports.Category = require('./category.model');
+
 
 
 

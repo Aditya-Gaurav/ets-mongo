@@ -18,7 +18,7 @@ router.use('/docs', docsRoute);
 router.use('/items', itemRoute);
 router.use('/variants', variantRoute);
 router.use('/hierarchys', hierarchytRoute);
-router.use('/brands', brandRoute);
+router.use('/brand', brandRoute);
 router.use('/facets', facetRoute);
 
 

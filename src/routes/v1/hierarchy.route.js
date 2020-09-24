@@ -6,6 +6,9 @@ const hierarchyController = require('../../controllers/hierarchy/hierarchy.contr
 
 const router = express.Router();
 
+router.route('/category').get(hierarchyController.getCategoryDescendants);
+router.route('/path').get(hierarchyController.getCategoryPath);
+
 router
   .route('/')
   .post( validate(hierarchyValidation.createHierarchy), hierarchyController.createHierarchy)
@@ -16,5 +19,6 @@ router
   .get(validate(hierarchyValidation.gethierarchy), hierarchyController.getHierarchy)
   .patch( validate(hierarchyValidation.updatehierarchy), hierarchyController.updateHierarchy)
   .delete( validate(hierarchyValidation.deletehierarchy), hierarchyController.deleteHierarchy);
+
 
 module.exports = router;

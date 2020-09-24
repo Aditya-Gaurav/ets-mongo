@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const HierarchyModel = mongoose.Schema({
+    _id: String,
   	name: {
       type: String
     },
