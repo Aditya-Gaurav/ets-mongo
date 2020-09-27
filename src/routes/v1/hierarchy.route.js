@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.route('/category').get(hierarchyController.getCategoryDescendants);
 router.route('/path').get(hierarchyController.getCategoryPath);
+router.route('/category').post(hierarchyController.createNewCategoryNode);
+
 
 router
   .route('/')
