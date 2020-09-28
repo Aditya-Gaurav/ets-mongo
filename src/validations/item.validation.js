@@ -14,7 +14,7 @@ const createItem = {
      name: Joi.string(),
      lname: Joi.string(),
      category: Joi.string(),
-     brand: Joi.object(),
+     brand: Joi.string().custom(objectId),
      assets: Joi.object().keys({ 
       imgs: Joi.array().items(
         Joi.object().keys({
@@ -37,7 +37,7 @@ const createItem = {
      specs: Joi.array().items(
       Joi.object().keys({
         name: Joi.string(),
-        val: Joi.string()
+        value: Joi.string()
       })
      ),
      attrs: Joi.array().items(

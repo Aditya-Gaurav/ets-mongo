@@ -34,6 +34,9 @@ const ItemSchema = mongoose.Schema({
 			type: String
 	},
 	brand: {
+		type: mongoose.SchemaTypes.ObjectId,
+		ref: 'Brand',
+		required: true,
 	},
 	assets: {
 		imgs: {
