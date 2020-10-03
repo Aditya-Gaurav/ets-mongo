@@ -26,7 +26,7 @@ const ItemSchema = mongoose.Schema({
 		val: String
 	}],
 	name: String,
-	vname: {
+	lname: {
 		type: String,
 		lowercase: true
 	},

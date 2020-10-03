@@ -42,6 +42,10 @@ const deleteItem = catchAsync(async (req, res) => {
 });
 
 const upload = catchAsync(async(req, res) => {
+
+  
+   
+
   console.log(req.body.username);
   console.log(req.files);
   const _id = mongoose.Types.ObjectId();
