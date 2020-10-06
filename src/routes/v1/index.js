@@ -7,6 +7,8 @@ const variantRoute = require('./variant.route');
 const hierarchytRoute = require('./hierarchy.route');
 const brandRoute = require('./brand.route');
 const facetRoute = require('./facet.route');
+const priceRoute = require('./price.route');
+
 
 
 
@@ -20,6 +22,8 @@ router.use('/variants', variantRoute);
 router.use('/hierarchys', hierarchytRoute);
 router.use('/brand', brandRoute);
 router.use('/facets', facetRoute);
+router.use('/price', priceRoute);
+
 
 
 module.exports = router;

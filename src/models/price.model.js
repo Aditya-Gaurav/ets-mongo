@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const PriceModel = mongoose.Schema({
-    price: {
+	  _id: String,
+		price: {
         type: String
     },
-    sale: {
-        type: Object
-    }
-	},
+    sales: {
+			salePrice: Number,
+			saleEndDate: Date,
+    },
+  },
 	{
 		timestamps: true
 	}

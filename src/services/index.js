@@ -7,5 +7,7 @@ module.exports.variantService = require('./variant.service');
 module.exports.hierarchyService = require('./hierarchy.service');
 module.exports.brandService = require('./brand.service');
 module.exports.facetService = require('./facet.service');
+module.exports.priceService = require('./price.service');
+
 
 

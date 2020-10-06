@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const { toJSON, paginate } = require('./plugins');
 
 const VariantModel = mongoose.Schema(
-  {
+  {  
+		_id: mongoose.SchemaTypes.ObjectId,
 		name: String,
 		lname:{
 			type: String,
@@ -24,6 +25,9 @@ const VariantModel = mongoose.Schema(
 		attrs: {
 			type: [],
 			default: undefined
+		},
+		count: {
+			type: Number
 		}
 
 	});

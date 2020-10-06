@@ -7,7 +7,7 @@ const createVariant = {
 	}),
 	
 	body: Joi.object().keys({
-   
+      _id: Joi.string().custom(objectId),
      name: Joi.string(),
 		 lname: Joi.string(),
      itemId: Joi.string().custom(objectId),
@@ -31,6 +31,7 @@ const createVariant = {
 				family: Joi.string()
       })
      ),
+     count: Joi.number()
   
 
 	})  

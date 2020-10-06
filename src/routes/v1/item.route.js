@@ -40,7 +40,6 @@ router.route('/upload').post( upload.array("file"),  (req, res, next) => {
       // Reference an existing bucket.
     //   var bucket = gcs.bucket('my-existing-bucket');  
     console.log("req.file", req.files)  ;
-    // return;  
     for(let i =0; i < req.files.length; i++){
         const {filename, originalname, buffer, path } = req.files[i]
           
