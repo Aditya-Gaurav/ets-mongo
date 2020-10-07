@@ -4,10 +4,10 @@ const { toJSON, paginate } = require('./plugins');
 const VariantModel = mongoose.Schema(
   {  
 		_id: mongoose.SchemaTypes.ObjectId,
+		sku: String,
 		name: String,
 		lname:{
 			type: String,
-
 		},
 		itemId: {
 		  type: mongoose.Schema.ObjectId,
@@ -25,9 +25,6 @@ const VariantModel = mongoose.Schema(
 		attrs: {
 			type: [],
 			default: undefined
-		},
-		count: {
-			type: Number
 		}
 
 	});

@@ -8,9 +8,9 @@ const hierarchytRoute = require('./hierarchy.route');
 const brandRoute = require('./brand.route');
 const facetRoute = require('./facet.route');
 const priceRoute = require('./price.route');
-
-
-
+const inventoryRoute = require('./inventory.route');
+const cartRoute = require('./cart.route');
+const orderRoute = require('./order.route');
 
 const router = express.Router();
 
@@ -23,7 +23,9 @@ router.use('/hierarchys', hierarchytRoute);
 router.use('/brand', brandRoute);
 router.use('/facets', facetRoute);
 router.use('/price', priceRoute);
-
+router.use('/inventory', inventoryRoute);
+router.use('/cart', cartRoute);
+router.use('/order', orderRoute);
 
 
 module.exports = router;

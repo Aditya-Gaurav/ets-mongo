@@ -7,6 +7,11 @@ module.exports.Brand = require('./brand.model');
 module.exports.Facet = require('./facet.model');
 module.exports.Category = require('./category.model');
 module.exports.Price = require('./price.model');
+module.exports.Inventory = require('./inventory.model');
+module.exports.Cart = require('./inventory.model');
+module.exports.Order = require('./order.model');
+
+
 
 
 
