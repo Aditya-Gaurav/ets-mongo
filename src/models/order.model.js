@@ -1,30 +1,49 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
 
 const OrderSchema = mongoose.Schema({
-	products: Object,
-	shipping: {
-		name: String,
-		address: String,
-		city: String,
-		state: String,
-		country: String,
-		zipCode: String,
-		region: String,
-		deliveryNotes: String
-	},
+	  userId: {
+			type: mongoose.SchemaTypes.ObjectId,
+			ref: 'User'
+		},
+		items: [{
+		 sku: String, 
+		 name: String, 
+		 quantity: Number, 
+		 price:Number
+		}],
 
-	tracking: {
-		company: String,
-		tracking_number: String,
-		status: String,
-		estimatedDelivery: Date
-	},
+		shipping: {
+			name: String,
+			address: String,
+			city: String,
+			state: String,
+			country: String,
+			zipCode: String,
+			region: String,
+			deliveryNotes: String
+		},
 
-	payment: {
-		method: String,
-		transactionId: String
+		tracking: {
+			company: String,
+			trackingNumber: String,
+			status: String,
+			estimatedDelivery: Date
+		},
+
+		payment: {
+			method: String,
+			transactionId: String
+		}
+	},
+	{
+		timestamps: true
 	}
-})
+)
+
+
+OrderSchema.plugin(toJSON);
+OrderSchema.plugin(paginate);
 
 const Order = mongoose.model('Order', OrderSchema);
 module.exports = Order;

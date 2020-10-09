@@ -3,13 +3,14 @@ const { password, objectId } = require('./custom.validation');
 
 const createCart = {
 	body: Joi.object().keys({
-		cartId: Joi.string().custom(objectId),
-		vars: Joi.array().items(
-						Joi.object().keys({
-								variantId: Joi.string().custom(objectId),
-								sku: Joi.string(),
-								quantity: Joi.number()
-						})
+		_id: Joi.string(),
+		status:Joi.string(),
+		items: Joi.array().items(
+						// Joi.object().keys({
+						// 		variantId: Joi.string().custom(objectId),
+						// 		sku: Joi.string(),
+						// 		quantity: Joi.number()
+						// })
         ),
 	})    
 };

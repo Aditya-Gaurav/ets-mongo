@@ -8,8 +8,14 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Cart>}
 */
 const createCart = async (cartBody) => {
-  console.log("CartBody", cartBody)
-  const cart = await Cart.create(cartBody);
+  console.log("CartBody", cartBody);
+  query = {'_id': cartBody._id},
+    update = {
+    $set: {status: cartBody.status},
+    $push: {items: cartBody.items[0]}
+  },
+  options = {upsert: true, useFindAndModify: false};
+  const cart = await Cart.findOneAndUpdate(query, update, options);
   return cart;
 };
 

@@ -8,8 +8,10 @@ module.exports.Facet = require('./facet.model');
 module.exports.Category = require('./category.model');
 module.exports.Price = require('./price.model');
 module.exports.Inventory = require('./inventory.model');
-module.exports.Cart = require('./inventory.model');
+module.exports.Cart = require('./cart.model');
 module.exports.Order = require('./order.model');
+module.exports.Wishlist = require('./whishlist.model');
+
 
 
 

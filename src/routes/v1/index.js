@@ -11,6 +11,7 @@ const priceRoute = require('./price.route');
 const inventoryRoute = require('./inventory.route');
 const cartRoute = require('./cart.route');
 const orderRoute = require('./order.route');
+const whishlistRoute = require('./whishlist.route');
 
 const router = express.Router();
 
@@ -26,6 +27,6 @@ router.use('/price', priceRoute);
 router.use('/inventory', inventoryRoute);
 router.use('/cart', cartRoute);
 router.use('/order', orderRoute);
-
+router.use('/whishlist', whishlistRoute);
 
 module.exports = router;
