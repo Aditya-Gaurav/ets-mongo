@@ -8,9 +8,17 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Inventory>}
 */
 const createInventory = async (inventoryBody) => {
-  console.log("inventoryBody", inventoryBody)
-  const inventory = await Inventory.create(inventoryBody);
+  console.log("inventoryBody", inventoryBody); 
+  query = {'itemId': inventoryBody.itemId},
+    update = {
+      $set: {itemId: inventoryBody.itemId},
+      $push: {vars: inventoryBody.vars[0]}
+  },
+  
+  options = {upsert: true, useFindAndModify: false};
+  const inventory = await Inventory.findOneAndUpdate(query, update, options);
   return inventory;
+
 };
 
 /**

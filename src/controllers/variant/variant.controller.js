@@ -3,9 +3,11 @@ const pick = require('../../utils/pick');
 const ApiError = require('../../utils/ApiError');
 const catchAsync = require('../../utils/catchAsync');
 const { variantService } = require('../../services');
+const { summaryService } = require('../../services')
 
 const createVariant = catchAsync(async (req, res) => {
-  const variant = await variantService.createVariant(req.params.itemId, req.body);
+  const variant = await variantService.createVariant(req.params.itemId, req.body.createVariantData);
+  const summary =  summaryService.updateSummaryVariantData(req.params.itemId, req.body.createSummaryData);
   res.status(httpStatus.CREATED).send(variant);
 });
 

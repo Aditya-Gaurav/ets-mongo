@@ -6,12 +6,13 @@ const InventorySchema = mongoose.Schema({
 		ref: 'Item',
 	},
 	vars: [{
-		variantId: {
+	variantId: {
 			type: mongoose.SchemaTypes.ObjectId,
 			ref: 'Variant',
 		},
-	sku: String,
-	quantity: Number
+		sku: String,
+		quantity: Number
+		
     }]
   },
   {

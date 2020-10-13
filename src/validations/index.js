@@ -9,6 +9,8 @@ module.exports.inventoryValidation = require('./inventory.validation');
 module.exports.cartValidation = require('./cart.validation');
 module.exports.orderValidation = require('./order.validation');
 module.exports.wishlistValidation = require('./wishlist.validation');
+module.exports.summaryValidation = require('./summary.validation');
+
 
 
 

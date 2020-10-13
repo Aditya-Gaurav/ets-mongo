@@ -7,11 +7,15 @@ const ApiError = require('../../utils/ApiError');
 const catchAsync = require('../../utils/catchAsync');
 const gc = require('../../utils/upload');
 const { itemService } = require('../../services');
+const { summaryService } = require('../../services');
+
 
 const sharp = require('sharp'); 
 
 const createItem = catchAsync(async (req, res) => {
-  const item = await itemService.createItem(req.body);
+  const item = await itemService.createItem(req.body.createItemData);
+  req.body.isummaryData['_id'] = item._id
+  await summaryService.createSummary(req.body.isummaryData);
   res.status(httpStatus.CREATED).send(item);
 });
 

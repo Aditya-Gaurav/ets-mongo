@@ -11,6 +11,8 @@ module.exports.Inventory = require('./inventory.model');
 module.exports.Cart = require('./cart.model');
 module.exports.Order = require('./order.model');
 module.exports.Wishlist = require('./whishlist.model');
+module.exports.Summary = require('./summary.model');
+
 
 
 

@@ -12,6 +12,8 @@ const inventoryRoute = require('./inventory.route');
 const cartRoute = require('./cart.route');
 const orderRoute = require('./order.route');
 const whishlistRoute = require('./whishlist.route');
+const summaryRoute = require('./summary.route');
+
 
 const router = express.Router();
 
@@ -28,5 +30,7 @@ router.use('/inventory', inventoryRoute);
 router.use('/cart', cartRoute);
 router.use('/order', orderRoute);
 router.use('/whishlist', whishlistRoute);
+router.use('/isummary', summaryRoute);
+
 
 module.exports = router;

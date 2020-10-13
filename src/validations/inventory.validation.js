@@ -5,11 +5,11 @@ const createInventory = {
 	body: Joi.object().keys({
 		itemId: Joi.string().custom(objectId),
 		vars: Joi.array().items(
-						Joi.object().keys({
-								variantId: Joi.string().custom(objectId),
-								sku: Joi.string(),
-								quantity: Joi.number()
-						})
+			Joi.object().keys({
+				variantId: Joi.string().custom(objectId),
+				sku: Joi.string(),
+				quantity: Joi.number()
+			})
         ),
 	})    
 };

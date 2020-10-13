@@ -26,7 +26,7 @@ var storage = multer.diskStorage({
 
 router
     .route('/')
-    .post(validate(itemValidation.createItem), itemController.createItem)
+    .post( itemController.createItem)
     .get(validate(itemValidation.getItems), itemController.getItems);
 
 router.route('/:itemId')

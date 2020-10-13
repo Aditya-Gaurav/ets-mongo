@@ -7,7 +7,7 @@ const variantController = require('../../controllers/variant/variant.controller'
 
 router
     .route('/:itemId')
-    .post(validate(variantValidation.createVariant), variantController.createVariant)
+    .post( variantController.createVariant)
     .get(validate(variantValidation.getVariants), variantController.getVariants);
 
 router.route('/:itemId/:variantId')

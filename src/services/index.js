@@ -12,6 +12,8 @@ module.exports.inventoryService = require('./inventory.service');
 module.exports.cartService = require('./cart.service');
 module.exports.orderService = require('./order.service');
 module.exports.wishlistService = require('./wishlist.service');
+module.exports.summaryService = require('./summary.service');
+
 
 
 

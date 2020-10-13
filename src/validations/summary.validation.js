@@ -1,7 +1,7 @@
 const Joi = require('@hapi/joi');
 const { password, objectId } = require('./custom.validation');
 
-const createOrder = {
+const createSummary = {
 	body: Joi.object().keys({
 		userId: Joi.string().custom(objectId),
 		items: Joi.array().items(),
@@ -12,25 +12,25 @@ const createOrder = {
 	})    
 };
 
-const getAllOrder = {
+const getAllSummary = {
  
 };
 
-const getOrder = {
+const getSummary = {
   params: Joi.object().keys({
-    OrderId: Joi.string().custom(objectId),
+    summaryId: Joi.string().custom(objectId),
   }),
 };
 
-const updateOrder = {
+const updateSummary = {
 
 };
 
 
-const deleteOrder = {
+const deleteSummary = {
   params: Joi.object().keys({
-    orderId: Joi.string().custom(objectId),
+    summaryId: Joi.string().custom(objectId),
   }),
 };
 
-module.exports = {createOrder, getAllOrder, getOrder, updateOrder, deleteOrder}
+module.exports = {createSummary, getAllSummary, getSummary, updateSummary, deleteSummary}

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
+const { toJSON, paginate } = require('./plugins');
 
-const SummaryModel = mongoose.Schema({
+const SummarySchemaModel = mongoose.Schema({
+    _id: {
+        type: String
+    },
     name: {
         type: String
     },
@@ -33,11 +37,16 @@ const SummaryModel = mongoose.Schema({
         type: Array,
         default: undefined
     }
+	},
+	{
+		
+	}
+)
 
+SummarySchemaModel.plugin(toJSON);
+SummarySchemaModel.plugin(paginate);
 
-})
-
-const Summary = mongoose.model('Summary', SummaryModel)
+const Summary = mongoose.model('Summary', SummarySchemaModel)
 
 module.exports = Summary;
 

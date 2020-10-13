@@ -8,7 +8,7 @@ const router = express.Router();
 
 router
   .route('/')
-  .post( validate(inventoryValidation.createInventory), inventoryController.createInventory)
+  .post(  inventoryController.createInventory)
   .get( validate(inventoryValidation.getAllInventory), inventoryController.getAllInventory);
 
 router
