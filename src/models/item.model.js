@@ -21,82 +21,51 @@ const ProductMediaSchema = mongoose.Schema(
 )
 
 const ItemSchema = mongoose.Schema({
-	desc: [{
-		lang: String,
-		val: String
-	}],
-	name: String,
-	lname: {
-		type: String,
-		lowercase: true
-	},
-	category: {
-			type: String
-	},
-	brand: {
-		type: mongoose.SchemaTypes.ObjectId,
-		ref: 'Brand',
-		required: true,
-	},
-	assets: {
-		imgs: {
-			type: Array
-		}
-	},
-	shipping: {
-		dimensions: {
-			type: Object
+		desc: [{
+			lang: String,
+			val: String
+		}],
+		name: String,
+		lname: {
+			type: String,
+			lowercase: true
 		},
-		weight: {
-			type: String
-		}
-	},
-	specs: {
-		type: Array
-	},
-	attrs: {
-		type: Array
-	},
-	variants: {
-		cnt: Number,
-		attrs: Array
-	},
-
-
-	// title: String,
-	// sku: String,
-	// price: {
-	// 	type: Currency,
-	// 	required: true
-  // },
-  // product_price_double: {
-	// 	type: Number,
-	// 	required: false
-  // },
-  // cost: {
-	// 	type: Currency,
-	// 	required: false
-	// },
-
-	// media: [ProductMediaSchema],
-	// attributes: {},
-	// manufacture_details: {},
-	// shipping_details: {
-	// 	weight: Number,
-	// 	width: Number,
-	// 	height: Number,
-	// 	depth: Number
-	// },
-	// sku: [{
-	// 	sku: String,
-	// 	color: String,
-	// 	price: String,
-	// 	quantity: Number,
-	// 	stockQuantity:Number,
-	// 	size: String,
-	// 	quantityOnOrder: Number,
-	// }],
-	// categories:[{}]
+		category: {
+				type: String
+		},
+		brand: {
+			type: mongoose.SchemaTypes.ObjectId,
+			ref: 'Brand',
+			required: true,
+		},
+		assets: {
+			imgs: {
+				type: Array
+			}
+		},
+		shipping: {
+			dimensions: {
+				type: Object
+			},
+			weight: {
+				type: String
+			}
+		},
+		specs: {
+			type: Array
+		},
+		attrs: {
+			type: Array
+		},
+		variants: {
+			cnt: Number,
+			attrs: Array
+		},
+		promotionId: {
+			type: mongoose.SchemaTypes.ObjectId,
+			ref: 'Promotion',
+			required: true,
+		},
 	},
 	{
 		timestamps: true
