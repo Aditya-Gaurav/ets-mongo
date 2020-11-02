@@ -11,7 +11,6 @@ router
   .post(summaryController.createSummary)
   .get( validate(summaryValidation.getAllSummary), summaryController.getAllSummary);
   router.route('/getProductAttr').get(summaryController.getProductAttr)  
-
 router
   .route('/:summaryId')
   .get(validate(summaryValidation.getSummary), summaryController.getSummary)
