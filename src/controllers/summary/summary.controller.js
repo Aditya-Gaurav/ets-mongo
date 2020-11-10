@@ -66,7 +66,7 @@ const getProductAttr = catchAsync(async (req, res) => {
        }
     ]) 
    
-    let f = ['red', 's'] 
+    let f = [] 
 
     filters[0].filters.forEach(item => {
       for (const [key, value] of Object.entries(item)) {
@@ -93,7 +93,64 @@ const getProductAttr = catchAsync(async (req, res) => {
 })
 
 const getAllSummary = catchAsync(async (req, res)=> {
-  // console.log(req.query);
+  const results = {};
+
+    const category = await Category.aggregate([
+      {$match:{$and :[ {'parent':"5f8bad7c407194d9ca4d169h"}]}},
+
+    ]);
+
+    const filters = await Summary.aggregate([
+      {$match:{$and :[ {'dep':"5f8bad7c407194d9ca4d169h"}]}},
+      {$facet: {
+    
+         "filters": [
+            {"$project": {"MergedArray": { "$setUnion": [ "$attrs", "$vars.attrs" ] }}},
+            {"$unwind" : "$MergedArray"},
+            {"$unwind" : "$MergedArray"},
+            {"$group" : { _id : '$_id', MergedArray: { $addToSet: "$MergedArray" }}},
+            {"$unwind": "$MergedArray"},
+            {"$sortByCount": "$MergedArray"},
+             { "$addFields": { 
+                "value": { "$arrayElemAt": [{ "$split": [ "$_id", "=" ]} , 1 ]},
+               "filterById": { "$arrayElemAt": [{ "$split": [ "$_id", "=" ]} , 0 ]},
+    
+            }},
+            {"$group" : { _id : '$filterById' ,   "facets": { "$push":  {"name": "$value", sum: {'$sum': "$count"}} } } },
+            
+          ]}
+       }
+    ]) 
+   console.log("req.query",req.query)
+    let f = Object.values(req.query);
+    selectedFacets = []
+   
+    let back =[];
+    Object.keys(req.query).forEach( (item) => {
+      if(req.query[item]) {
+        req.query[item] =  req.query[item].replace(/%20/g, " ");
+      }
+      const a = req.query[item].split('--');
+      back.push(a)
+    })
+    back = back.flat(1);
+    console.log("back", back);
+
+    filters[0].filters.forEach(item => {
+      for (const [key, value] of Object.entries(item)) {
+       if(key === 'facets' ){ 
+          item[key].forEach( item => {
+            // item.push({a:1})
+            console.log('back.indexOf(item)', back.indexOf(item['name']))
+            back.indexOf(item['name']) === -1  ?
+                Object.assign(item,{isSelected:false}) : 
+                  Object.assign(item,{isSelected:true})
+    
+          })
+        }
+    }
+    })
+
   var a = Object.values(req.query);
 
   var b = [];
@@ -173,12 +230,12 @@ const getAllSummary = catchAsync(async (req, res)=> {
      
   }
 
-  if(req.query.sort){
-    let sort = {
-      "sort": req.query.sort
-    } 
-    Object.assign(filterList, sort);
-  }
+  // if(req.query.sort){
+  //   let sort = {
+  //     "sort": req.query.sort
+  //   } 
+  //   Object.assign(filterList, sort);
+  // }
 
   if(req.query.discount){
       let discount = {
@@ -259,6 +316,34 @@ const getAllSummary = catchAsync(async (req, res)=> {
   } 
 
   console.log("searchListArray", JSON.stringify(filterList));
+  console.log("req.query", req.query);
+
+
+  let sort;
+  if(req.query.sort){
+    
+    if(req.query.sort === 'newest') {
+      sort = {
+        createdAt : -1
+      }
+    }
+    if(req.query.sort === 'price_low_to_high') {
+      sort = {
+        price : 1
+      }
+    }
+   
+    if(req.query.sort === 'price_high_to_low') {
+      sort = {
+        price : -1
+      }
+    }
+
+  } else{
+    sort = {
+      createdAt : -1
+    }
+  }
 
   //  return;
 
@@ -266,10 +351,58 @@ const getAllSummary = catchAsync(async (req, res)=> {
 
   const filter = pick(req.query, ['name', 'role']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
+   let result = {};
+   console.log('sort', sort);
+   console.log("filterList", filterList);
 
   // const result = await summaryService.getAllSummary(filter, options);
-  const result = await Summary.find(filterList);
- 
+  const styles = await Summary.find(filterList).sort(sort);
+  // results['categoryList'] = category;
+  // results['filters'] = filters[0].filters;
+  const sorting  = {
+    "list":[
+      {
+         "displayName":"Popularity",
+         "value":"popularity",
+         "isSelected":true
+      },
+      {
+         "displayName":"Newest",
+         "value":"newest",
+         "isSelected":false
+      },
+      {
+         "displayName":"Price: Low to High",
+         "value":"price_low_to_high",
+         "isSelected":false
+      },
+      {
+         "displayName":"Price: High to Low",
+         "value":"price_high_to_low",
+         "isSelected":false
+      },
+      {
+         "displayName":"Discount",
+         "value":"discount",
+         "isSelected":false
+      }
+    ],
+    "mapping":"sort"
+  };
+
+  const queryApplied ={ 
+    mapping: "qa",
+    value: null
+  }
+   
+  result['sort'] = sorting;
+  result['styles'] = styles;
+  result['queryApplied'] = queryApplied;
+
+  result['filters'] = {};
+  result['filters']['filterBy'] = filters[0].filters;
+  result['filters']['category'] = category;
+
   res.send(result);
 
 })
