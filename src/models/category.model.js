@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 const categoryModel = mongoose.Schema({
     _id: String,
     parent: String,
+    name: String,
     order: Number,
     count: Number,
-    slug: String,
+    url: String,
     facets: Array
 })
 

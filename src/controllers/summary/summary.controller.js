@@ -93,15 +93,20 @@ const getProductAttr = catchAsync(async (req, res) => {
 })
 
 const getAllSummary = catchAsync(async (req, res)=> {
-  const results = {};
+  console.log('req.query.department',req.query.department)
+  console.log('req.query',req.query);
 
-    const category = await Category.aggregate([
-      {$match:{$and :[ {'parent':"5f8bad7c407194d9ca4d169h"}]}},
+  const cat = await Category.findOne({'url': req.query.department});
 
-    ]);
+  let breadcrumbList = [{
+    breadcrumbText: cat['name'],
+    url: cat['url']
+  }];
 
-    const filters = await Summary.aggregate([
-      {$match:{$and :[ {'dep':"5f8bad7c407194d9ca4d169h"}]}},
+  const category = await Category.find({'parent': cat['_id']});
+  
+  const filters = await Summary.aggregate([
+      {$match:{$and :[ {'dep': cat['_id']}]}},
       {$facet: {
     
          "filters": [
@@ -134,14 +139,14 @@ const getAllSummary = catchAsync(async (req, res)=> {
       back.push(a)
     })
     back = back.flat(1);
-    console.log("back", back);
+    // console.log("back", back);
 
     filters[0].filters.forEach(item => {
       for (const [key, value] of Object.entries(item)) {
        if(key === 'facets' ){ 
-          item[key].forEach( item => {
+          item[key].forEach(item => {
             // item.push({a:1})
-            console.log('back.indexOf(item)', back.indexOf(item['name']))
+            // console.log('back.indexOf(item)', back.indexOf(item['name']))
             back.indexOf(item['name']) === -1  ?
                 Object.assign(item,{isSelected:false}) : 
                   Object.assign(item,{isSelected:true})
@@ -227,7 +232,27 @@ const getAllSummary = catchAsync(async (req, res)=> {
 
 
   if(req.query.price){
-     
+    let inputPrice  = req.query.price;
+    let querySearchForCustomer = {
+      '$or': []
+    };
+    let  priceInputArray =  inputPrice.split('--');
+    for (let item of priceInputArray) {
+      let  InputArray =  item.split('-');
+      let price =  {
+        price: {$gte:parseInt(InputArray[0], 10), $lte: parseInt(InputArray[1], 10)}
+      }
+      querySearchForCustomer['$or'].push(price);
+
+    }
+
+    // let  priceInputArray =  inputPrice.split('-');
+    // let price =  {
+    //   price: {$gte:parseInt(priceInputArray[0], 10), $lte: parseInt(priceInputArray[1], 10)}
+    // }
+
+    Object.assign(filterList, querySearchForCustomer);
+
   }
 
   // if(req.query.sort){
@@ -390,11 +415,45 @@ const getAllSummary = catchAsync(async (req, res)=> {
     "mapping":"sort"
   };
 
+  const priceList =  {  
+      _id: "price",
+      displayName: "Price",
+      displayOrder: 6,
+      displayType: "minMaxRange",
+      filterType: "Price",
+      facets: [
+        {
+          count: 68,
+          name: "0-499",
+          displayName: "Below Rs.499",
+          isSelected: false,
+          value: "0-499",
+        },
+        {
+          count: 142,
+          name: "500-999",
+          displayName: "Rs.500 - Rs.999",
+          isSelected: false,
+          value: "500-999",
+        },
+        {
+          count: 142,
+          name: "1000-0",
+          displayName: "Above Rs.1000",
+          isSelected: false,
+          value: "1000-0",
+        }
+     ]
+    };
+  
+
+  filters[0].filters.push(priceList);
   const queryApplied ={ 
     mapping: "qa",
     value: null
   }
-   
+  
+  result['breadcrumbList'] = breadcrumbList
   result['sort'] = sorting;
   result['styles'] = styles;
   result['queryApplied'] = queryApplied;
