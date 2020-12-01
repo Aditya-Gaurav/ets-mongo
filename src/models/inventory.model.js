@@ -3,7 +3,7 @@ const mongoose  = require('mongoose');
 const InventorySchema = mongoose.Schema({
 	itemId:  {
 		type: mongoose.SchemaTypes.ObjectId,
-		ref: 'Item',
+		ref: 'User',
 	},
 	vars: [{
 	variantId: {

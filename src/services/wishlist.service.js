@@ -1,16 +1,39 @@
 const httpStatus = require('http-status');
-const { Order } = require('../models');
+const { Wishlist } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
- * Create a Order
- * @param {Object} OrderBody
- * @returns {Promise<Order>}
+ * Create a wishlist
+ * @param {Object} wishlistBody
+ * @returns {Promise<wishlist>}
 */
-const createOrder = async (orderBody) => {
-  console.log("OrderBody", orderBody)
-  const order = await Order.create(orderBody);
-  return order;
+const createWishlist = async (wishlistBody) => {
+  let update;
+  let query = { _id: wishlistBody.userId};
+  let options = {upsert: true, useFindAndModify: false};
+
+  await Wishlist.find({"items._id": wishlistBody.productsInfo._id }, async function (err, docs){
+    console.log("Result:", docs);
+    console.log("err:", err); 
+    if (err){ 
+      console.log(err) 
+    } else{ 
+      if(docs.length > 0) {
+        update =  { $pull: { items: { _id: wishlistBody.productsInfo._id }} }
+      } else{
+        update = {
+          $set: {_id: wishlistBody.userId, status: 'active'},
+          $push: {items: wishlistBody.productsInfo} 
+        }
+
+    }
+
+    console.log("Result:", docs); 
+
+    const wishlist = await Wishlist.findOneAndUpdate(query, update, options);
+    return wishlist;
+    } 
+  });
 };
 
 /**
@@ -22,36 +45,36 @@ const createOrder = async (orderBody) => {
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-const getAllOrder = async (filter, options) => {
-  const result = await Order.paginate(filter, options);
+const getAllWishlist = async (filter, options) => {
+  const result = await Wishlist.paginate(filter, options);
   return result;
 };
 
 
 
 /**
- * Get Order by id
+ * Get wishlist by id
  * @param {ObjectId} id
- * @returns {Promise<Order>}
+ * @returns {Promise<wishlist>}
  */
-const getOrder = async (id) => {
-  return Order.findById(id);
+const getWishlist = async (id) => {
+  return Wishlist.findById(id);
 };
 
 
 /**
- * Delete Order by id
- * @param {ObjectId} OrderId
- * @returns {Promise<Order>}
+ * Delete wishlist by id
+ * @param {ObjectId} wishlistId
+ * @returns {Promise<wishlist>}
  */
-const deleteOrder = async (OrderId) => {
-  const order = await getOrder(OrderId);
-  if (!order) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Order not found');
+const deleteWishlist = async (wishlistId) => {
+  const wishlist = await getWishlist(wishlistId);
+  if (!wishlist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'wishlist not found');
   }
-  await Order.remove();
-  return order;
+  await wishlist.remove();
+  return wishlist;
 };
 
 
-module.exports = {createOrder, getAllOrder, getOrder, deleteOrder}
+module.exports = {createWishlist, getAllWishlist, getWishlist, deleteWishlist}

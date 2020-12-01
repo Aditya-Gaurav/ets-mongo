@@ -8,15 +8,90 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Cart>}
 */
 const createCart = async (cartBody) => {
-  console.log("CartBody", cartBody);
-  query = {'_id': cartBody._id},
-    update = {
-    $set: {status: cartBody.status},
-    $push: {items: cartBody.items[0]}
-  },
-  options = {upsert: true, useFindAndModify: false};
-  const cart = await Cart.findOneAndUpdate(query, update, options);
-  return cart;
+  let update;
+  let query = { _id: cartBody.userId};
+  let options = {upsert: true, useFindAndModify: false};
+
+  await Cart.find({"items._id": cartBody.productsInfo._id }, async function (err, docs){
+    console.log("Result:", docs);
+    console.log("err:", err); 
+ 
+
+    if (err){ 
+      console.log(err) 
+    } 
+
+
+    else{ 
+      if(docs.length > 0) {
+        update =  { $pull: { items: { _id: cartBody.productsInfo._id  }} }
+      } else{
+        update = {
+          $set: {_id: cartBody.userId, status: 'active'},
+          $push: {items: cartBody.productsInfo} 
+        }
+
+      }
+
+      console.log("Result:", docs); 
+
+      const cart = await Cart.findOneAndUpdate(query, update, options);
+      return cart;
+  } 
+  });
+  
+  // if(req.body.addCart){
+  //   update = { $push: {items: cartBody.productsInfo} }
+  // } else{
+  //   update =  { $pull: { items: { _id: cartBody.productsInfo._id  }} }
+  // }
+  // console.log("CartBody", cartBody);
+
+  // return;
+  // query = {'_id': cartBody._id},
+  //   update = {
+  //   $set: {status: cartBody.status},
+  //   $push: {items: cartBody.items[0]}
+  // },
+  // const cart = await Cart.findOneAndUpdate(query, update, options);
+  // return cart;
+
+// console.log("userId:", cartBody.userId);
+// console.log("productsInfo:", cartBody.productsInfo)
+
+
+//   const cart = Cart.findOneAndUpdate(
+//     { _id: cartBody.userId}, 
+//     //  {$set: {"items.status": "inActive"}},
+
+//     {
+//      $push: {items: cartBody.productsInfo }
+//     //  $pull: { items: { _id: cartBody.productsInfo._id  }}
+
+//      },
+    
+//     options);
+
+
+//   return cart;
+
+
+
+  // var quantity = 1;
+  // var col = db.getSisterDB("shop").products;
+  // col.update({
+  //     _id: productId
+  //   , quantity: { $gte: quantity }
+  // }, {
+  //     $inc: { quantity: -quantity }
+  //   , $push: {
+  //     reserved: {
+  //       quantity: quantity, _id: userId, created_on: new Date()
+  //     }
+  //   }
+  // });
+
+
 };
 
 /**

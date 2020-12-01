@@ -1,7 +1,7 @@
 const Joi = require('@hapi/joi');
 const { password, objectId } = require('./custom.validation');
 
-const createOrder = {
+const createWishlist = {
 	body: Joi.object().keys({
 		userId: Joi.string().custom(objectId),
 		items: Joi.array().items(),
@@ -11,26 +11,25 @@ const createOrder = {
 
 	})    
 };
-async
-const getAllOrder = {
+const getAllWishlist = {
  
 };
 
-const getOrder = {
+const getWishlist = {
   params: Joi.object().keys({
-    OrderId: Joi.string().custom(objectId),
+    WishlistId: Joi.string().custom(objectId),
   }),
 };
 
-const updateOrder = {
+const updateWishlist = {
 
 };
 
 
-const deleteOrder = {
+const deleteWishlist = {
   params: Joi.object().keys({
-    orderId: Joi.string().custom(objectId),
+    WishlistId: Joi.string().custom(objectId),
   }),
 };
 
-module.exports = {createOrder, getAllOrder, getOrder, updateOrder, deleteOrder}
+module.exports = {createWishlist, getAllWishlist, getWishlist, updateWishlist, deleteWishlist}

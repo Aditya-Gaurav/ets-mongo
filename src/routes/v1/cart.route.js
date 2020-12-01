@@ -8,13 +8,13 @@ const router = express.Router();
 
 router
   .route('/')
-  .post( validate(cartValidation.createCart), cartController.createCart)
-  .get( validate(cartValidation.getAllCart), cartController.getAllCart);
+  .post(  cartController.createCart)
+  .get(  cartController.getAllCart);
 
 router
   .route('/:cartId')
-  .get(validate(cartValidation.getCart), cartController.getCart)
-  .patch( validate(cartValidation.updateCart), cartController.updateCart)
-  .delete( validate(cartValidation.deleteCart), cartController.deleteCart);
+  .get( cartController.getCart)
+  .patch(  cartController.updateCart)
+  .delete(  cartController.deleteCart);
 
 module.exports = router;

@@ -11,7 +11,7 @@ const priceRoute = require('./price.route');
 const inventoryRoute = require('./inventory.route');
 const cartRoute = require('./cart.route');
 const orderRoute = require('./order.route');
-const whishlistRoute = require('./whishlist.route');
+const wishlistRoute = require('./wishlist.route');
 const summaryRoute = require('./summary.route');
 
 
@@ -29,7 +29,7 @@ router.use('/price', priceRoute);
 router.use('/inventory', inventoryRoute);
 router.use('/cart', cartRoute);
 router.use('/order', orderRoute);
-router.use('/whishlist', whishlistRoute);
+router.use('/wishlist', wishlistRoute);
 router.use('/isummary', summaryRoute);
 
 
