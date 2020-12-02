@@ -25,7 +25,29 @@ router.get('/google', passport.authenticate('google', {
         ]
     })
 )
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' } ), (req, res) => {return res.status(200) })
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' } ), (req, res) => {
+         var responseHTML = '<html><head><title>Main</title></head><body></body><script>res = %value%; window.opener.postMessage(res, "*");window.close();</script></html>'
+        responseHTML = responseHTML.replace('%value%', JSON.stringify({
+            user: req.user
+        }));
+       return res.status(200).send(responseHTML);
+    // return res.status(200) 
+
+
+})
+
+
+// router.get('/google/callback',
+//     passport.authenticate('google', { failureRedirect: '/fail' }),
+//     function(req, res) {
+//         console.log('%value%');
+//         var responseHTML = '<html><head><title>Main</title></head><body></body><script>res = %value%; window.opener.postMessage(res, "*");window.close();</script></html>'
+//         responseHTML = responseHTML.replace('%value%', JSON.stringify({
+//             user: req.user
+//         }));
+//         res.status(200).send(responseHTML);
+//     });
+
 
 // Setting the facebook oauth routes
 router.get('/facebook', passport.authenticate('facebook'));
